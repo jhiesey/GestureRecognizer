@@ -35,17 +35,17 @@
 		E4119EA01470C0D200761EAE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		E4119EA21470C0D200761EAE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E4119EA41470C0D200761EAE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		E4119EA81470C0D200761EAE /* GestureRecognizer-Info.plist */ = {isa = PBXFileReference; path = "GestureRecognizer-Info.plist"; sourceTree = "<group>"; };
+		E4119EA81470C0D200761EAE /* GestureRecognizer-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GestureRecognizer-Info.plist"; sourceTree = "<group>"; };
 		E4119EAA1470C0D200761EAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		E4119EAC1470C0D200761EAE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		E4119EAE1470C0D200761EAE /* GestureRecognizer-Prefix.pch */ = {isa = PBXFileReference; path = "GestureRecognizer-Prefix.pch"; sourceTree = "<group>"; };
-		E4119EAF1470C0D200761EAE /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		E4119EAE1470C0D200761EAE /* GestureRecognizer-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GestureRecognizer-Prefix.pch"; sourceTree = "<group>"; };
+		E4119EAF1470C0D200761EAE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4119EB01470C0D200761EAE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E4119EB71470C0D200761EAE /* GestureRecognizerTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GestureRecognizerTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4119EB81470C0D200761EAE /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		E4119EC01470C0D200761EAE /* GestureRecognizerTests-Info.plist */ = {isa = PBXFileReference; path = "GestureRecognizerTests-Info.plist"; sourceTree = "<group>"; };
+		E4119EC01470C0D200761EAE /* GestureRecognizerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GestureRecognizerTests-Info.plist"; sourceTree = "<group>"; };
 		E4119EC21470C0D200761EAE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		E4119EC41470C0D200761EAE /* GestureRecognizerTests.h */ = {isa = PBXFileReference; path = GestureRecognizerTests.h; sourceTree = "<group>"; };
+		E4119EC41470C0D200761EAE /* GestureRecognizerTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GestureRecognizerTests.h; sourceTree = "<group>"; };
 		E4119EC51470C0D200761EAE /* GestureRecognizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GestureRecognizerTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
