@@ -1,21 +1,6 @@
-function [IDX, C] = computeClusters(origPoints)
+function clust = computeClusters(points, dictSize)
 
-[origM, origDim] = size(origPoints);
-threshold = 0.1;
-
-% Filter, keeping samples with large deltas only
-points = zeros(1, 3);
-points(1,:) = origPoints(1,:);
-m = 1;
-for k=2:origM
-  % distSq = dot(origPoints(k,:), origPoints(m,:));
-  distSq = dot(origPoints(k,:), origPoints(k - 1,:));
-  if distSq > threshold
-     points = [points; origPoints(k,:)];
-     m = m + 1;
-  end
-end
-
+[m, dim] = size(points);
 
 % Compute the average radius
 centroid = mean(points);
@@ -28,7 +13,6 @@ end
 avgRadius = avgRadius / m;
 
 % Do k-means
-dictSize = 10;
 centers = zeros(dictSize, 3);
 
 dlong = pi * (3 - sqrt(5));
@@ -51,7 +35,7 @@ end
 
 % scatter3(centers(:,1), centers(:,2), centers(:,3), clustSizes * 5, 'g')
 
-[IDX, C] = kmeans(points, dictSize, 'start', centers, 'emptyaction', 'drop');
+[IDX, clust] = kmeans(points, dictSize, 'start', centers, 'emptyaction', 'drop');
 % [IDX, C] = kmeans(points, dictSize, 'emptyaction', 'drop');
 
 end

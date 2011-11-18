@@ -19,13 +19,13 @@ for i = 1:numel(gestures)
     
     gest_cell = cell(1,numel(trainlist));
     for j = 1:numel(trainlist)
-        gest_cell{j} = readAccelData([gest_path '/' trainlist(j).name]);
+        gest_cell{j} = filterPoints(readAccelData([gest_path '/' trainlist(j).name]));
     end
     training{i} = gest_cell;
     
     gest_cell = cell(1,numel(testlist));
     for j = 1:numel(testlist)
-        gest_cell{j} = readAccelData([gest_path '/' testlist(j).name]);
+        gest_cell{j} = filterPoints(readAccelData([gest_path '/' testlist(j).name]));
     end
     testing{i} = gest_cell;
 end
