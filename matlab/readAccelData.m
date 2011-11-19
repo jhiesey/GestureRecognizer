@@ -16,6 +16,6 @@ while ~feof(fid)
     end
     data_matrix(end+1,:) = sscanf(curr_line, '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
 end
-
+fclose(fid);
 end
 

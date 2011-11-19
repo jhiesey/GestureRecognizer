@@ -13,7 +13,7 @@ end
 avgRadius = avgRadius / m;
 
 % Do k-means
-centers = zeros(dictSize, 3);
+centers = zeros(dictSize, dim);
 
 dlong = pi * (3 - sqrt(5));
 long = 0;

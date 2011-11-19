@@ -11,8 +11,8 @@ end
 clust = computeClusters(allData, num_clusters);
 T = delaunayn(clust);
 
-prior_init = 1/8 * ones(1,8);
-emission_init = ones(8, num_clusters);
+prior_init = 1/8 * ones(8,1);
+emission_init = 1/num_clusters * ones(8, num_clusters);
 trans_init = ...
 [ 1/3 1/3 1/3 0 0 0 0 0; ...
   0 1/3 1/3 1/3 0 0 0 0; ...
@@ -24,6 +24,11 @@ trans_init = ...
   0 0 0 0 0 0 0 1 ...
 ];
 
+% prior_init = normalise(rand(8,1));
+% trans_init = mk_stochastic(rand(8,8));
+% emission_init = mk_stochastic(rand(8, num_clusters)); 
+
+
 priors = cell(size(training));
 transmats = cell(size(training));
 obsmats = cell(size(training));
@@ -34,7 +39,7 @@ for k=1:numel(training)
   for l=1:numExamples
     sample{l} = dsearchn(clust, T, gestureExamples{l});
   end
-  [ll_trace, prior, transmat, obsmat, iterNr] = dhmm_em(sample, prior_init, trans_init, emission_init, 'max_iter', 20);
+  [ll_trace, prior, transmat, obsmat, iterNr] = dhmm_em(sample, prior_init, trans_init, emission_init, 'max_iter', 15);
   priors{k} = prior;
   transmats{k} = transmat;
   obsmats{k} = obsmat;
