@@ -11,6 +11,9 @@ for i = 1:numel(gestures)
     gest_path = [data_path '/' gest];
     filelist = dir([gest_path '/*.txt']);
     
+    % randomize test/train split
+    filelist = filelist(randperm(numel(filelist)));
+    
     gest_cell = cell(1,numel(filelist));
     
     cutoff = round(numel(filelist) * proportion);

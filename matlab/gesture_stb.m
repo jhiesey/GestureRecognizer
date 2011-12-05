@@ -32,15 +32,14 @@ trans_init = ...
 priors = cell(size(training));
 transmats = cell(size(training));
 obsmats = cell(size(training));
-for k=1:numel(training) % loop over gestures
+for k=1:numel(training)
   gestureExamples = training{k};
   numExamples = numel(gestureExamples);
   sample = cell(1, numExamples);
-  for l=1:numExamples % loop over training examples
-    sample{l} = dsearchn(clust, T, gestureExamples{l});
+  for l=1:numExamples
+    sample{l} = dsearchn(clust, T, gestureExamples{l})';
   end
-  [ll_trace, prior, transmat, obsmat, iterNr] = dhmm_em(sample, prior_init, trans_init, emission_init, 'max_iter', 15);
-  priors{k} = prior;
+  [transmat, obsmat] = hmmtrain(sample, trans_init, emission_init, 'maxiterations', 15, 'verbose', 'true');
   transmats{k} = transmat;
   obsmats{k} = obsmat;
 end
@@ -53,12 +52,12 @@ num_total = 0;
 for g = 1:num_gestures
     for k = 1:numel(testing{g})
         % discretize
-        disc_test = dsearchn(clust, T, testing{g}{k});
+        disc_test = dsearchn(clust, T, testing{g}{k})';
         
         % try all HMMs
         loglik = zeros(1, num_gestures);
         for l = 1:num_gestures
-            loglik(l) = dhmm_logprob(disc_test, priors{l}, transmats{l}, obsmats{l});
+            [PSTATES loglik(l)] = hmmdecode(disc_test, transmats{l}, obsmats{l});
         end
         [val, ind] = max(loglik);
         if ind == g

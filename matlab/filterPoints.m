@@ -4,7 +4,7 @@ function points = filterPoints(origPoints)
 threshold = 0.1;
 
 % dim selection
-dim_select = [5:7 11:13];
+dim_select = [5:7];% 11:13];
 
 % Filter, keeping samples with large deltas only
 points = zeros(1, numel(dim_select));
