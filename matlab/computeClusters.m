@@ -35,7 +35,7 @@ end
 
 % scatter3(centers(:,1), centers(:,2), centers(:,3), clustSizes * 5, 'g')
 
-[IDX, clust] = kmeans(points, dictSize, 'start', centers, 'emptyaction', 'drop');
+[IDX, clust] = kmeans(points, dictSize, 'start', centers, 'emptyaction', 'singleton');
 % [IDX, C] = kmeans(points, dictSize, 'emptyaction', 'drop');
 
 end

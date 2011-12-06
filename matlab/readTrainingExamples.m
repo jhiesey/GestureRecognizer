@@ -1,6 +1,9 @@
 function [training, testing] = readTrainingExamples(gestures, proportion)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+%readTrainingExamples return a random split of train/test data
+%   gestures should be a cell array of folder names in the data folder
+%   containing the desired gestures to load. proportion should be a number
+%   [0,1] specifying what proportion of the training examples will be
+%   assigned to the training set.
 
 data_path = '../data';
 
