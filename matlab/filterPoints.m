@@ -20,3 +20,16 @@ for k=2:origM
      m = m + 1;
   end
 end
+
+
+pn = [];
+for i = 1:size(points,1)
+    pn(i) = norm(points(i), 2);
+end
+points = points / mean(pn);
+
+
+%keyboard;
+
+
+
