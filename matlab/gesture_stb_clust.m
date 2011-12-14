@@ -2,6 +2,8 @@
 num_clusters =  28;     % number of clusters in our emission alphabet
 
 [data, total_samples] = readTrainingExamplesAll({'circles', 'triangles'});
+
+
 % training and testing are each cell arrays containing a cell array for
 % each gesture. Each of these gesture cell arrays contains a matrix of
 % accel data.
@@ -34,17 +36,27 @@ for fold = 1:num_folds
     end
     
     % collect all training data samples together for clustering
-    allData = zeros(0, size(training{1}{1},2));
+    
+    allData = cell(numel(data), 1);
+    
+    allData{1} = zeros(0, size(training{1}{1},2));
+    allData{2} = zeros(0, size(training{1}{1},2));
+    
     for k=1:numel(training)
         exampleData = vertcat(training{k}{:});
-        allData = [allData ; exampleData];
+        allData{k} = [allData{k} ; exampleData];
+        
     end
     
     % computer cluster centroids
+    clust = cell(numel(data), 1);
+    T = cell(numel(data), 1);
     
-    clust = computeClusters(allData, num_clusters);
-    % computer delauny simplices from cluster centroids
-    T = delaunayn(clust);
+    for k=1:numel(training)
+        clust{k} = computeClusters(allData{k}, num_clusters);
+        % computer delauny simplices from cluster centroids
+        T{k} = delaunayn(clust{k});
+    end
     
     
     prior_init = 1/8 * ones(8,1);
@@ -60,13 +72,11 @@ for fold = 1:num_folds
         0 0 0 0 0 0 0 1 ...
         ];
     
-    % prior_init = normalise(rand(8,1));
-    % trans_init = mk_stochastic(rand(8,8));
-    % emission_init = mk_stochastic(rand(8, num_clusters));
-    
     
     transmats = cell(size(training));   % holds the learned transistion matrix for each gesture HMM
     obsmats = cell(size(training));     % holds the learned emission matrix for each geture HMM
+    
+    
     
     for k=1:numel(training)
         gestureExamples = training{k};
@@ -75,7 +85,7 @@ for fold = 1:num_folds
         % convert training samples into symbol sequences
         seq = cell(1, numExamples);
         for l=1:numExamples
-            seq{l} = dsearchn(clust, T, gestureExamples{l})';
+            seq{l} = dsearchn(clust{k}, T{k}, gestureExamples{l})';
         end
         
         % train and save the HMM
@@ -92,11 +102,12 @@ for fold = 1:num_folds
     for g = 1:num_gestures
         for k = 1:numel(testing{g})
             % discretize
-            seq = dsearchn(clust, T, testing{g}{k})';
+            %seq = dsearchn(clust, T, testing{g}{k})';
             
             % try all HMMs
             loglik = zeros(1, num_gestures);
             for l = 1:num_gestures
+                seq = dsearchn(clust{l}, T{l}, testing{g}{k})';
                 [PSTATES loglik(l)] = hmmdecode(seq, transmats{l}, obsmats{l});
             end
             [val, ind] = max(loglik);   % find max loglik gesture model
