@@ -27,6 +27,8 @@ num_clusters =  28;     % number of clusters in our emission alphabet
 % end
 
 
+
+
 num_folds = 10;
 kfold_ind = cell(1,numel(data));
 for g = 1:numel(data)
