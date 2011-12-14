@@ -41,9 +41,11 @@ for fold = 1:num_folds
     end
     
     % computer cluster centroids
+    
     clust = computeClusters(allData, num_clusters);
     % computer delauny simplices from cluster centroids
     T = delaunayn(clust);
+    
     
     prior_init = 1/8 * ones(8,1);
     emission_init = 1/num_clusters * ones(8, num_clusters); % init emission matrix with first guess
@@ -65,6 +67,7 @@ for fold = 1:num_folds
     
     transmats = cell(size(training));   % holds the learned transistion matrix for each gesture HMM
     obsmats = cell(size(training));     % holds the learned emission matrix for each geture HMM
+    
     for k=1:numel(training)
         gestureExamples = training{k};
         numExamples = numel(gestureExamples);
