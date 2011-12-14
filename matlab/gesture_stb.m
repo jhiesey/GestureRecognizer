@@ -1,7 +1,7 @@
 
 num_clusters =  28;     % number of clusters in our emission alphabet
-num_states = 1;         % number of states in hmm
-hmm_width = 1;          % numbef of next states to distribute the initial transition probability over
+num_states = 8;         % number of states in hmm
+hmm_width = 3;          % numbef of next states to distribute the initial transition probability over
 
 [data, total_samples] = readTrainingExamplesAll({'triangles', 'circles'});
 % training and testing are each cell arrays containing a cell array for
