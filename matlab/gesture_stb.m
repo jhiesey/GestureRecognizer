@@ -1,7 +1,9 @@
 
 num_clusters =  28;     % number of clusters in our emission alphabet
+num_states = 8;         % number of states in hmm
+hmm_width = 3;          % numbef of next states to distribute the initial transition probability over
 
-[data, total_samples] = readTrainingExamplesAll({'circles', 'triangles'});
+[data, total_samples] = readTrainingExamplesAll({'triangles', 'circles'});
 % training and testing are each cell arrays containing a cell array for
 % each gesture. Each of these gesture cell arrays contains a matrix of
 % accel data.
@@ -25,8 +27,6 @@ num_clusters =  28;     % number of clusters in our emission alphabet
 %     data{1}(ind1) = data{2}(ind2);
 %     data{2}(ind2) = temp;
 % end
-
-
 
 
 num_folds = 10;
@@ -60,18 +60,28 @@ for fold = 1:num_folds
     T = delaunayn(clust);
     
     
-    prior_init = 1/8 * ones(8,1);
-    emission_init = 1/num_clusters * ones(8, num_clusters); % init emission matrix with first guess
-    trans_init = ...                % init transistion matrix with first guess
-        [ 1/3 1/3 1/3 0 0 0 0 0; ...
-        0 1/3 1/3 1/3 0 0 0 0; ...
-        0 0 1/3 1/3 1/3 0 0 0; ...
-        0 0 0 1/3 1/3 1/3 0 0; ...
-        0 0 0 0 1/3 1/3 1/3 0; ...
-        0 0 0 0 0 1/3 1/3 1/3; ...
-        0 0 0 0 0 0 1/2 1/2; ...
-        0 0 0 0 0 0 0 1 ...
-        ];
+    prior_init = 1/num_states * ones(num_states,1);
+    emission_init = 1/num_clusters * ones(num_states, num_clusters); % init emission matrix with first guess
+%     trans_init = ...                % init transistion matrix with first guess
+%         [ 1/3 1/3 1/3 0 0 0 0 0; ...
+%         0 1/3 1/3 1/3 0 0 0 0; ...
+%         0 0 1/3 1/3 1/3 0 0 0; ...
+%         0 0 0 1/3 1/3 1/3 0 0; ...
+%         0 0 0 0 1/3 1/3 1/3 0; ...
+%         0 0 0 0 0 1/3 1/3 1/3; ...
+%         0 0 0 0 0 0 1/2 1/2; ...
+%         0 0 0 0 0 0 0 1 ...
+%         ];
+
+    trans_init = zeros(num_states);
+    for st=1:hmm_width
+       trans_init = trans_init + diag(ones(num_states - st + 1, 1), st - 1);  
+    end
+    
+    Z = sum(trans_init,2); 
+    S = Z + (Z==0);
+    norm = repmat(S, 1, size(trans_init,2));
+    trans_init = trans_init ./ norm;
     
     % prior_init = normalise(rand(8,1));
     % trans_init = mk_stochastic(rand(8,8));
