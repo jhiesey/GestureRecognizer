@@ -1,5 +1,5 @@
 
-num_clusters =  75;     % number of clusters in our emission alphabet
+num_clusters =  28;     % number of clusters in our emission alphabet
 
 [data, total_samples] = readTrainingExamplesAll({'circles', 'triangles'});
 % training and testing are each cell arrays containing a cell array for

@@ -22,11 +22,11 @@ for k=2:origM
 end
 
 
-% pn = [];
-% for i = 1:size(points,1)
-%     pn(i) = norm(points(i), 2);
-% end
-% points = points / mean(pn);
+pn = [];
+for i = 1:size(points,1)
+    pn(i) = norm(points(i), 2);
+end
+points = points / mean(pn);
 
 
 %keyboard;

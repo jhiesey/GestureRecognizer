@@ -7,6 +7,7 @@ function data_matrix = readAccelData( filename )
 
 data_matrix = zeros(0,16);
 fid = fopen(filename);
+disp(filename);
 line_num = 0;
 while ~feof(fid)
     curr_line = strtrim(fgets(fid));
@@ -14,7 +15,9 @@ while ~feof(fid)
     if line_num <= 2
         continue;           % skip the first two header lines
     end
+    %disp(curr_line);
     data_matrix(end+1,:) = sscanf(curr_line, '%f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f');
+    
 end
 fclose(fid);
 end
