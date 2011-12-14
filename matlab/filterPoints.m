@@ -4,7 +4,7 @@ function points = filterPoints(origPoints)
 threshold = 0.05;
 
 % dim selection
-dim_select = [5:7 11:13];
+dim_select = [5:7 11:13];  % [5:7 11:13];
 
 % Filter, keeping samples with large deltas only
 points = zeros(1, numel(dim_select));
@@ -22,11 +22,11 @@ for k=2:origM
 end
 
 
-pn = [];
-for i = 1:size(points,1)
-    pn(i) = norm(points(i), 2);
-end
-points = points / mean(pn);
+% pn = [];
+% for i = 1:size(points,1)
+%     pn(i) = norm(points(i), 2);
+% end
+% points = points / mean(pn);
 
 
 %keyboard;

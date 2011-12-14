@@ -1,5 +1,5 @@
 
-num_clusters =  28;     % number of clusters in our emission alphabet
+num_clusters =  75;     % number of clusters in our emission alphabet
 
 [data, total_samples] = readTrainingExamplesAll({'circles', 'triangles'});
 % training and testing are each cell arrays containing a cell array for
@@ -15,6 +15,17 @@ num_clusters =  28;     % number of clusters in our emission alphabet
 %     kfold_ind{g} = fold_labels(segment_index+1:numel(data{g}));
 %     segment_index = segment_index + numel(data{g});
 % end
+
+
+% scramble data
+% for scrams = 1:(numel(data{1})+numel(data{2}))
+%     ind1 = Sample(1:numel(data{1}));
+%     ind2 = Sample(1:numel(data{2}));
+%     temp = data{1}(ind1);
+%     data{1}(ind1) = data{2}(ind2);
+%     data{2}(ind2) = temp;
+% end
+
 
 num_folds = 10;
 kfold_ind = cell(1,numel(data));
