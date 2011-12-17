@@ -12,9 +12,6 @@
 \begin{document}
 \maketitle
 
-% \begin{abstract}
-% This is the paper's abstract \ldots
-% \end{abstract}
 
 \section{Introduction}
 We expand and improve upon the Hidden Markov Model algorithm (KHMM) presented in Klingmann [1] to improve identification of 3d gestures on mobile devices.  Specifically, we extend the algorithm to include a a weighted probability measure for clustering ``fit", as well as expand our feature space to use gyroscope information, which is available on most mobile devices today.  This gives nontrivial gains in both robustness and accuracy in 3d gesture recognition over Klingmann's initial implementation.
@@ -25,6 +22,10 @@ There are a variety of reasons why we use gyroscope information. Firstly, gyrosc
 
 On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
 \pagebreak
+
+\section{Data}
+As with any learning algorithm we require to have some data available.  We use Apple's iPhone and xSensor application to record, train and test our various algorithms.  For each training example for any gesture type xSensor returns to us an ordered series of vectors in $\mathbb{R}^n$ containing instantaneous acceleration and gyroscope data sampled at 32 hz.  For the most part we normalize each training example by scaling each vector in the training example by $\frac{n}{\sum_n{\parallel x_n \parallel}}$, where the training example consists of $n$ instantaneous feature vectors.  
+
 
 \section{Algorithms}
 We now discuss the three main algorithms that we examine and analyze, starting first with Klingmann's baseline KHMM, followed by our Cluster-Matching-HMM and Cluster-Matching alterations.  
