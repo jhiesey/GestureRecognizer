@@ -11,11 +11,12 @@
 }
 \date{\today}
 
-\documentclass[12pt]{article}
-\usepackage[margin=1.0in]{geometry}
+\documentclass[11pt]{article}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{indentfirst}
+\usepackage{wrapfig}
 
 \begin{document}
 \maketitle
@@ -29,7 +30,7 @@ We alter KHMM's clustering assumptions.  Specifically, we address the implicit a
 There are a variety of reasons why we use gyroscope information. Firstly, gyroscope data is additional information that is useful for identifying gestures, especially considering that slight variations in the device's orientation from gesture to gesture will affect accelerometer readings. These variations, however, can be corrected for with judicious use of gyroscope data. We hypothesize that a machine learning algorithm will be capable of utilizing the data to effectively make these corrections, thereby resulting in better orientation invariance.  Secondly, if we wish to use 3d gestures as an input modality for mobile devices, inclusion of gyroscope information offers opportunities for greater expressiveness. Gestures can now include and be differentiated by orientation changes.
 
 On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
-\pagebreak
+% \pagebreak
 
 \section{Data}
 As with any learning algorithm we require to have some data available.  We use Apple's iPhone and xSensor application to record, train and test our various algorithms.  For each training example for any gesture type xSensor returns to us an ordered series of vectors in $\mathbb{R}^n$ containing instantaneous acceleration and gyroscope data sampled at 32 hz.  For the most part we normalize each training example by scaling each vector in the training example by $\frac{n}{\sum_n{\parallel x_n \parallel}}$, where the training example consists of $n$ instantaneous feature vectors.  
@@ -87,6 +88,8 @@ Formally we describe the algorithm as follows:
 
 
 \section{Results}\label{results}
+
+We tested our algorithms on six datasets: circles (with the phone held relatively flat), triangles (with the phone held similarly), bowling motions, flicking the phone upward, and flicking up and to the right.  The last set, used only in a few tests, consisted of squares.  These datasets all include gestures of deliberately variable quality: some are carefully controlled, and others less so.
 
 \begin{center}
 \begin{tabular}{ | l | l | l | l | l | }
@@ -150,12 +153,13 @@ any non contrived data.
 Increasing the number of symbols in the HMM's alphabet improves accuracy
 up to a point, but at the cost of a decrease in performance.
 
-\begin{figure}
+
+\begin{wrapfigure}{r}{0.5\textwidth}
 \center
 \includegraphics[scale=0.5]{accuracy_vs_num_clusters.png}
 \caption{Classification accuracy of Cluster-Matching-HMM for 6 gestures}
 \label{fig:alphabetsize}
-\end{figure}
+\end{wrapfigure}
 
 % For example, on the five KHMM gestures, increasing the alphabet size
 % from 10 to 40 improves the accuracy from 96.7\% to 98.4\%.  On the contrived
