@@ -1,5 +1,5 @@
 
-num_clusters =  28;     % number of clusters in our emission alphabet
+num_clusters = 10;     % number of clusters in our emission alphabet
 
 [data, total_samples] = readTrainingExamplesAll({'circles', 'triangles'});
 
@@ -54,6 +54,7 @@ for fold = 1:num_folds
     
     for k=1:numel(training)
         clust{k} = computeClusters(allData{k}, num_clusters);
+        clust{k};
         % computer delauny simplices from cluster centroids
         T{k} = delaunayn(clust{k});
     end
@@ -107,8 +108,13 @@ for fold = 1:num_folds
             % try all HMMs
             loglik = zeros(1, num_gestures);
             for l = 1:num_gestures
-                seq = dsearchn(clust{l}, T{l}, testing{g}{k})';
-                [PSTATES loglik(l)] = hmmdecode(seq, transmats{l}, obsmats{l});
+                loglikz = 0;
+                [seq1, distance] = dsearchn(clust{l}, T{l}, testing{g}{k});
+                seq = seq1';
+                distance_final = norm(distance);
+                
+                [PSTATES loglikz] = hmmdecode(seq, transmats{l}, obsmats{l});
+                loglik(l) = loglikz * distance_final
             end
             [val, ind] = max(loglik);   % find max loglik gesture model
             if ind == g
