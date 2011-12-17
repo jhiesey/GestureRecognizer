@@ -83,22 +83,22 @@ Formally we describe the algorithm as follows:
 \begin{center}
 \begin{tabular}{ | l | l | l | l | l | }
   \hline
-  Normalization & Features & Algorithm & Gestures Types & Accuracy \\ \hline
-  Yes	&	Both  &	All & Cluster-matching with HMM (10) &	94.6\% \\ \hline
-  Yes	&	Both	&	All & Original  &	89.6\% \\ \hline
-  No	&	Both	&	All & Original  &	88.4\% \\ \hline
-  Yes	&	Accel &	All & Cluster-matching with HMM (10) &	92.0\% \\ \hline
-  Yes	&	Accel &	All &	Original & 84.2\% \\ \hline
-  Yes	&	Gyro  &	All & Cluster-matching with HMM (10) & 92.3\% \\ \hline
-  Yes	&	Gyro  &	All & Original &  89.7\% \\ \hline
-  Yes	&	Both	&	All &	Cluster-matching (10) &  96.7\% \\ \hline
-  Yes	&	Both	&	All &	Cluster-matching (20) &  97.9\% \\ \hline
-  Yes	&	Both  &	All &	Cluster-matching (40) & 	98.4\% \\ \hline
-  No	&	Both	&	All &	Cluster-matching (40) & 	98.4\% \\ \hline
-  Yes	&	Both	& Squares &	Cluster-matching (10) & 	100\% \\ \hline
-  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching (10) & 	Chance \\ \hline
-  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching with HMM (10) &	72.0\% \\ \hline
-  Yes	&	Both  & Circles and Reversed-circles  &	Cluster-matching with HMM (20) & 88.8\% \\
+  Normalization & Features & Gestures Types & Algorithms & Accuracy \\ \hline
+  Yes	&	Both  &	All & Cluster-Matching-HMM (10) &	94.6\% \\ \hline
+  Yes	&	Both	&	All & KHMM  &	89.6\% \\ \hline
+  No	&	Both	&	All & KHMM  &	88.4\% \\ \hline
+  Yes	&	Accel &	All & Cluster-Matching-HMM (10) &	92.0\% \\ \hline
+  Yes	&	Accel &	All &	KHMM & 84.2\% \\ \hline
+  Yes	&	Gyro  &	All & Cluster-Matching-HMM (10) & 92.3\% \\ \hline
+  Yes	&	Gyro  &	All & KHMM &  89.7\% \\ \hline
+  Yes	&	Both	&	All &	Cluster-Matching (10) &  96.7\% \\ \hline
+  Yes	&	Both	&	All &	Cluster-Matching (20) &  97.9\% \\ \hline
+  Yes	&	Both  &	All &	Cluster-Matching (40) & 	98.4\% \\ \hline
+  No	&	Both	&	All &	Cluster-Matching (40) & 	98.4\% \\ \hline
+  Yes	&	Both	& Squares &	Cluster-Matching (10) & 	100\% \\ \hline
+  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-Matching (10) & 	Chance \\ \hline
+  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-Matching-HMM (10) &	72.0\% \\ \hline
+  Yes	&	Both  & Circles and Reversed-circles  &	Cluster-Matching-HMM (20) & 88.8\% \\
   \hline
 \end{tabular}
 \end{center}
@@ -121,12 +121,12 @@ Our initial approach of clustering on all training data together
 worked reasonably well.  When running on all 5 sample gestures and
 with the HMM enabled, we got an an accuracy of 89.6\%.
 
-However, on the same data, our cluster-matching algorithm combined with
+However, on the same data, our Cluster-Matching algorithm combined with
 an HMM reaches 94.6\% accuracy.  We also observed similar improvements with
 other examples, as seen in the data.
 
 \subsection{HMM}
-Although we found a few examples where the cluster-matching algorithm
+Although we found a few examples where the Cluster-Matching algorithm
 benefits from using a Hidden Markov Model, in most real-world examples
 there is little benefit.  When running on all of the training data,
 we found that adding the HMM actually decreased accuracy slightly,
@@ -134,7 +134,7 @@ from 96.7\% to 94.6\%, which may be due to random fluctuations.
 
 However, when comparing the data for circles to our contrived data
 set consisting of the first and second halves of each circle switched,
-the using an HMM with alphabet size of 20 improved the results from chance
+then using an HMM with alphabet size of 20 improved the results from chance
 to 88.8\%.  Unfortunately we could not get such dramatic improvements with
 any non contrived data.
 
@@ -142,7 +142,7 @@ any non contrived data.
 Increasing the number of symbols in the HMM's alphabet improves accuracy
 up to a point, but at the cost of a decrease in performance.
 
-% For example, on the five original gestures, increasing the alphabet size
+% For example, on the five KHMM gestures, increasing the alphabet size
 % from 10 to 40 improves the accuracy from 96.7\% to 98.4\%.  On the contrived
 % circle data, the improvement was much larger, from 72.0\% to 88.8\%.
 
@@ -152,8 +152,8 @@ outside of that range.
 
 \subsection{Normalization}
 In general, our normalization makes only a small difference.  With the
-original algorithm we saw an improvement of less than 1.5\% in accuracy,
-and we saw no detectable difference using cluster-matching.
+KHMM algorithm we saw an improvement of less than 1.5\% in accuracy,
+and we saw no detectable difference using Cluster-Matching.
 
 
 \section{Conclusions}\label{conclusions}
