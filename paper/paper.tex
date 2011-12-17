@@ -31,27 +31,28 @@ as seen in the data.
 Although we found a few examples where the cluster-matching algorithm
 benefits from using a Hidden Markov Model, in most real-world examples
 there is little benefit.  When running on all of the training data,
-we 
+we found that adding the HMM actually decreased accuracy slightly,
+from 96.7\% to 94.6\%
 
 
 \begin{center}
 \begin{tabular}{ | l | l | l | l | l | }
   \hline
   Normalization & Features & Algorithm & Gestures Types & Accuracy \\ \hline
-  Yes	&	Both  &	All & Cluster-matching with HMM &	94.6\% \\ \hline
+  Yes	&	Both  &	All & Cluster-matching with HMM (10) &	94.6\% \\ \hline
   Yes	&	Both	&	All & Original  &	89.6\% \\ \hline
-  Yes	&	Accel &	All & Cluster-matching with HMM &	92.0\% \\ \hline
+  Yes	&	Accel &	All & Cluster-matching with HMM (10) &	92.0\% \\ \hline
   Yes	&	Accel &	All &	Original & 84.2\% \\ \hline
-  Yes	&	Gyro  &	All & Cluster-matching with HMM & 92.3\% \\ \hline
+  Yes	&	Gyro  &	All & Cluster-matching with HMM (10) & 92.3\% \\ \hline
   Yes	&	Gyro  &	All & Original &  89.7\% \\ \hline
-  Yes	&	Both	&	All &	Cluster-matching &  96.7\% \\ \hline
-  Yes	&	Both	&	All &	Cluster-matching &  97.9\% \\ \hline
-  Yes	&	Both  &	All &	Cluster-matching & 	98.4\% \\ \hline
-  No	&	Both	&	All &	Cluster-matching & 	98.4\% \\ \hline
-  Yes	&	Both	& Squares &	Cluster-matching & 	100\% \\ \hline
-  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching & 	Chance \\ \hline
-  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching with HMM &	72.0\% \\ \hline
-  Yes	&	Both  & Circles and Reversed-circles  &	Cluster-matching with HMM	& 88.8\% \\
+  Yes	&	Both	&	All &	Cluster-matching (10) &  96.7\% \\ \hline
+  Yes	&	Both	&	All &	Cluster-matching (20) &  97.9\% \\ \hline
+  Yes	&	Both  &	All &	Cluster-matching (40) & 	98.4\% \\ \hline
+  No	&	Both	&	All &	Cluster-matching (40) & 	98.4\% \\ \hline
+  Yes	&	Both	& Squares &	Cluster-matching (10) & 	100\% \\ \hline
+  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching (10) & 	Chance \\ \hline
+  Yes	&	Both	& Circles and Reversed-circles  &	Cluster-matching with HMM (10) &	72.0\% \\ \hline
+  Yes	&	Both  & Circles and Reversed-circles  &	Cluster-matching with HMM (20) & 88.8\% \\
   \hline
 \end{tabular}
 \end{center}
