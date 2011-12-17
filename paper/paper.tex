@@ -7,6 +7,7 @@
 
 \documentclass[12pt]{article}
 \usepackage[margin=1.0in]{geometry}
+\usepackage{amsfonts}
 
 \begin{document}
 \maketitle
@@ -16,6 +17,34 @@
 % \end{abstract}
 
 \section{Introduction}
+We expand and improve upon the Hidden Markov Model algorithm (KHMM) presented in Klingmann [1] to improve identification of 3d gestures on mobile devices.  Specifically, we extend the algorithm to include a a weighted probability measure for clustering ``fit", as well as expand our feature space to use gyroscope information, which is available on most mobile devices today.  This gives nontrivial gains in both robustness and accuracy in 3d gesture recognition over Klingmann's initial implementation.
+
+We alter KHMM's clustering assumptions.  Specifically, we address the implicit assumption that clustering centroids remain uniform across gesture types.  By assigning to each gesture type a unique set of centroids we make significant and immediate gains.  We derive two alternative algorithms to test our hypotheses, denoting them Cluster-Matching-HMM and Cluster-Matching.  
+
+There are a variety of reasons why we use gyroscope information. Firstly, gyroscope data is additional information that is useful for identifying gestures, especially considering that slight variations in the device's orientation from gesture to gesture will affect accelerometer readings. These variations, however, can be corrected for with judicious use of gyroscope data. We hypothesize that a machine learning algorithm will be capable of utilizing the data to effectively make these corrections, thereby resulting in better orientation invariance.  Secondly, if we wish to use 3d gestures as an input modality for mobile devices, inclusion of gyroscope information offers opportunities for greater expressiveness. Gestures can now include and be differentiated by orientation changes.
+
+On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
+\pagebreak
+
+\section{Algorithms}
+We now discuss the three main algorithms that we examine and analyze, starting first with Klingmann's baseline KHMM, followed by our MultiClustHMM and MultiClust alterations.  
+
+\subsection{KHMM}
+
+
+KHMM uses k-means clustering to discretize the space of real vectors followed by training one Hidden Markov Model for each gesture type.  The intuition behind this can be thought of as follows: the clustering across all gesture types serves mainly to project each data vector which is in $ \mathbb{R}^n $ (where there are $n$ features) to $\mathbb{Z}$.  Concretely this discretizes the data uniformly regardless of what gesture type it belongs to.  Following the discretization KHMM then trains a Hidden Markov Model of the discretized training sets for each gesture type.
+\\
+\\
+Formally we describe the algorithm as follows:
+
+	\subsubsection{Clustering}
+		For all training example across all gesture types, kmeans defines a clustering function $f: \mathbb{R}^n \rightarrow \mathbb{Z}$. 
+	\subsubsection{Hidden Markov Model}
+		For each set of training examples for each gesture type train a Hidden Markov Model.  Namely in this stage, for each gesture type $g$, we generate a function $h_g: (\mathbb{Z}^k) \rightarrow \mathbb{R}_{[0,1]}$  by the Hidden Markov Model process:
+$HMM: (\mathbb{Z}^k)^t \rightarrow h_g$, where each training example consists of k instantaneous data points and there are t training examples for gesture type g.  
+	\subsubsection{Classification Procedure}
+		To classify an unknown gesture example, which exists in $(\mathbb{R}^n)^k$, we first transform it to it’s dicsretized version, namely $f($\mathbb{R}^n)^k$ and then for each gesture type $g$, apply $h_g((f(\mathbb{R}^n))^k)$ and classify the example according to the $g’$ were $h_g’$ returns maximum value. 
+
 
 \section{Results}\label{results}
 \paragraph{Clustering approach}
