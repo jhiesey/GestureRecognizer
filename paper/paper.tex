@@ -1,0 +1,51 @@
+\title{SafeServe: User-Editable Websites in Haskell}
+\author{
+        John Hiesey \\
+        jhiesey@cs.stanford.edu
+}
+\date{\today}
+
+\documentclass[12pt]{article}
+\usepackage[margin=1.0in]{geometry}
+
+\begin{document}
+\maketitle
+
+% \begin{abstract}
+% This is the paper's abstract \ldots
+% \end{abstract}
+
+\section{Introduction}
+
+\section{Results}\label{results}
+In this section we describe the results.
+
+
+\begin{center}
+\begin{tabular}{ | l | l | l | l | l | }
+  \hline
+  Normalization & Data & Features & Gesture Types & Accuracy \\ \hline
+  No	&	Simple	&	Gyro	&	circle \& triangle	&	87.7\% \\ \hline
+  No	&	Simple	&	Accel	&	circle \& triangle	&	87.7\% \\ \hline
+  No	&	Simple	&	Accel and Gyro	&	circle \& triangle	&	96.7\% \\ \hline
+  Yes	&	Simple	&	Accel and Gyro	&	circle \& triangle	&	90.7\% \\ \hline
+  No	&	Complex	&	Accel and Gyro	&	circle \& triangle	&	89.5\% \\ \hline
+  Yes	&	Complex	&	Accel and Gyro	&	circle \& triangle	&	91.9\% \\ \hline
+  Yes	&	Complex	&	Accel	&	up-flip \& right-flip	&	91.0\% \\ \hline
+  Yes	&	Complex	&	Gyro	&	up-flip \& right-flip	&	100\% \\ \hline
+  Yes	&	Complex	&	Accel and Gyro	&	up-flip \& right-flip	&	100\% \\ \hline
+  Yes	&	Complex	&	Accel	&	up-flip, right-flip, circle, triangle, and bowl	&	87.9\% \\ \hline
+  Yes	&	Complex	&	Gyro	&	up-flip, right-flip, circle, triangle, and bowl	&	89.8\% \\ \hline
+  Yes	&	Complex	&	Accel and Gyro	&	up-flip, right-flip, circle, triangle, and bowl	&	90.0\% \\
+  \hline
+\end{tabular}
+\end{center}
+
+\section{Conclusions}\label{conclusions}
+We worked hard, and achieved very little.
+
+\bibliographystyle{abbrv}
+\bibliography{main}
+
+
+\end{document}
