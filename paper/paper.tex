@@ -32,8 +32,13 @@ Although we found a few examples where the cluster-matching algorithm
 benefits from using a Hidden Markov Model, in most real-world examples
 there is little benefit.  When running on all of the training data,
 we found that adding the HMM actually decreased accuracy slightly,
-from 96.7\% to 94.6\%
+from 96.7\% to 94.6\%, which may be due to random fluctuations.
 
+However, when comparing the data for circles to our contrived data
+set consisting of the first and second halves of each circle switched,
+the using an HMM with alphabet size of 20 improved the results from chance
+to 88.8\%.  Unfortunately we could not get such dramatic improvements with
+any non contrived data.
 
 \begin{center}
 \begin{tabular}{ | l | l | l | l | l | }
