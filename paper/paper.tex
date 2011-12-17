@@ -1,4 +1,4 @@
-\title{SafeServe: User-Editable Websites in Haskell}
+\title{Incorporating Gyroscope Information in Gesture Recognition}
 \author{
         John Hiesey \\
         jhiesey@cs.stanford.edu
@@ -18,7 +18,20 @@
 \section{Introduction}
 
 \section{Results}\label{results}
-In this section we describe the results.
+\paragraph{Clustering approach}
+Our initial approach of clustering on all training data together
+worked reasonably well.  When running on all 5 sample gestures and
+with the HMM enabled, we got an an accuracy of 89.6\%.
+
+However, on the same data, our cluster-matching algorithm combined with
+an HMM reaches 94.6\%.  We also observed similar improvements with examples,
+as seen in the data.
+
+\paragraph{HMM}
+Although we found a few examples where the cluster-matching algorithm
+benefits from using a Hidden Markov Model, in most real-world examples
+there is little benefit.  When running on all of the training data,
+we 
 
 
 \begin{center}
@@ -43,6 +56,9 @@ In this section we describe the results.
 
 \section{Conclusions}\label{conclusions}
 We worked hard, and achieved very little.
+
+\section{Future Research}
+Try our new algorithm with single clustering
 
 \bibliographystyle{abbrv}
 \bibliography{main}
