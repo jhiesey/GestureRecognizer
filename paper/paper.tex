@@ -11,8 +11,8 @@
 }
 \date{\today}
 
-\documentclass[11pt]{article}
-\usepackage[margin=0.75in]{geometry}
+\documentclass[12pt]{article}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{amsfonts}
 \usepackage{graphicx}
 \usepackage{indentfirst}
@@ -29,7 +29,7 @@ We alter KHMM's clustering assumptions.  Specifically, we address the implicit a
 There are a variety of reasons why we use gyroscope information. Firstly, gyroscope data is additional information that is useful for identifying gestures, especially considering that slight variations in the device's orientation from gesture to gesture will affect accelerometer readings. These variations, however, can be corrected for with judicious use of gyroscope data. We hypothesize that a machine learning algorithm will be capable of utilizing the data to effectively make these corrections, thereby resulting in better orientation invariance.  Secondly, if we wish to use 3d gestures as an input modality for mobile devices, inclusion of gyroscope information offers opportunities for greater expressiveness. Gestures can now include and be differentiated by orientation changes.
 
 On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
-% \pagebreak
+\pagebreak
 
 \section{Data}
 As with any learning algorithm we require to have some data available.  We use Apple's iPhone and xSensor application to record, train and test our various algorithms.  For each training example for any gesture type xSensor returns to us an ordered series of vectors in $\mathbb{R}^n$ containing instantaneous acceleration and gyroscope data sampled at 32 hz.  For the most part we normalize each training example by scaling each vector in the training example by $\frac{n}{\sum_n{\parallel x_n \parallel}}$, where the training example consists of $n$ instantaneous feature vectors.  
@@ -41,31 +41,31 @@ We now discuss the three main algorithms that we examine and analyze, starting f
 \subsection{KHMM}
 
 
-KHMM uses k-means clustering to discretize the space of real vectors followed by training one Hidden Markov Model for each gesture type.  The intuition behind this can be thought of as follows: the clustering across all gesture types serves mainly to project each data vector which is in $ \mathbb{R}^n $ (where there are $n$ features) to $\mathbb{Z^{+}}$.  Concretely this discretizes the data uniformly regardless of what gesture type it belongs to.  Following the discretization KHMM then trains a Hidden Markov Model of the discretized training sets for each gesture type.
+KHMM uses k-means clustering to discretize the space of real vectors followed by training one Hidden Markov Model for each gesture type.  The intuition behind this can be thought of as follows: the clustering across all gesture types serves mainly to project each data vector which is in $ \mathbb{R}^n $ (where there are $n$ features) to $\mathbb{Z^{+}}$.  Concretely, this discretizes the data uniformly regardless of what gesture type it belongs to.  Following the discretization KHMM then trains a Hidden Markov Model of the discretized training sets for each gesture type.
 \\
 \\
 Formally we describe the algorithm as follows:
 
 	\subsubsection{Clustering}
-		For all training example across all gesture types, kmeans defines a clustering function $f: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$. 
+		For all training examples across all gesture types, running k-means on all of the training data simultaneously defines a single clustering function $f: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$. 
 	\subsubsection{Hidden Markov Model}
-		For each set of training examples for each gesture type train a Hidden Markov Model.  Namely in this stage, for each gesture type $g$, we generate a function $h_g: (\mathbb{Z^{+}}^k) \rightarrow \mathbb{R}_{[0,1]}$  by the Hidden Markov Model process:
+		For each set of training examples for each gesture type, train a Hidden Markov Model.  Namely in this stage, for each gesture type $g$, we generate a function $h_g: (\mathbb{Z^{+}}^k) \rightarrow \mathbb{R}_{[0,1]}$  by the Hidden Markov Model process:
 $HMM: (\mathbb{Z^{+}}^k)^t \rightarrow h_g$, where each training example consists of $k$ instantaneous data points and there are $t$ training examples for gesture type g.  
 	\subsubsection{Classification Procedure}
-		To classify an unknown gesture example, which exists in $(\mathbb{R}^n)^k$, we first transform it to its discretized version, namely $f(\mathbb{R}^n)^k$ and then for each gesture type $g$, apply $h_g((f(\mathbb{R}^n))^k)$ and classify the example according to the $g’$ were $h_g’$ returns maximum value. 
+		To classify an unknown gesture example, which exists in $(\mathbb{R}^n)^k$, we first transform it to its discretized version, namely $f(\mathbb{R}^n)^k$ and then for each gesture type $g$, apply $h_g((f(\mathbb{R}^n))^k)$ and classify the example according to the $g’$ were $h_g’$ returns maximum probability. 
 		
 		
 \subsection{Cluster-Matching-HMM}
 
-The motivation for Cluster-Matching-HMM derives from the realization that in the clustering step KHMM applies the same centroids to each training example regardless of what gesture type it belongs too.  We hypothesize that different gesture types have vastly different vector features score (ie lie in different subspaces of $\mathbb{R}^n$) and thus we might gain information by clustering each gesture type independently and then training an HMM for each clustered training type.  In the classification step we then classify over each clustering and each corresponding HMM.  Moreover we weight the resulting HMM probabilities according to how well the training example ``fits" in the the assigned cluster.  
+The motivation for Cluster-Matching-HMM derives from the realization that in the clustering step KHMM applies the same centroids to each training example regardless of what gesture type it belongs to.  We hypothesize that different gesture types have vastly different vector features score (i.e. lie in different subspaces of $\mathbb{R}^n$) and thus we might gain information by clustering each gesture type independently and then training an HMM for each clustered training type.  In the classification step we then classify over each clustering and each corresponding HMM.  Moreover we weight the resulting HMM probabilities according to how well the training example ``fits" in the the assigned cluster.  
 \\
 \\
 Formally we describe the algorithm as follows:
 
 	\subsubsection{Clustering}
-		For each gesture type $g$ across all training examples, kmeans defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$.
+		For each gesture type $g$ across all training examples, running k-means on all of the training data from for one gesture only defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$ for each gesture type.
 	\subsubsection{Hidden Markov Model}
-		For each set of training examples for each gesture type train a Hidden Markov Model.  Namely in this set we generate a function $h_g: (\mathbb{Z^{+}}^k) \rightarrow \mathbb{R}_{[0,1]}$ by the Hidden Markov Model process: 
+		For each set of training examples for each gesture type, train a Hidden Markov Model.  Namely in this set we generate a function $h_g: (\mathbb{Z^{+}}^k) \rightarrow \mathbb{R}_{[0,1]}$ by the Hidden Markov Model process: 
 		$HMM: (\mathbb{Z^{+}}^k)^t \rightarrow h_g$, where each training example consists of $k$ instantaneous data points and there are $t$ training examples for gesture type $g$.  
 
 	\subsubsection{Classification Procedure}
@@ -80,7 +80,7 @@ Motivated by the effectiveness\footnote{See results.} of Cluster-Matching-HMM we
 Formally we describe the algorithm as follows:
 
 		\subsubsection{Clustering}
-		For each gesture type $g$ across all training examples, kmeans defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$.
+		For each gesture type $g$ across all training examples, k-means defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z^{+}}$.
 
 		 \subsubsection{Classification Procedure}
  		For all $g$, compute $p((f_g(\mathbb{R}^n))^k)$.  Return $g$ that returns minimum value.  
@@ -115,7 +115,10 @@ Formally we describe the algorithm as follows:
 In general, the highest accuracy is achieved when using both accelerometer
 and gyroscope data, followed by gyroscope data only, followed by accelerometer data only.
 
-FINISH THIS
+For example, using Cluster-Matching-HMM, both accelerometer and gyroscope data together
+achieves 94.6\% on all gesture types, followed by gyroscope data only at 92.3\%, and
+accelerometer data only at 92.0\%.  The same general pattern is evident in the KHMM
+data as well.
 
 As we could not find any examples of using gyroscope data for gesture recognition
 in the literature, this seems to be unique way of improving gesture recognition
@@ -168,11 +171,12 @@ KHMM algorithm we saw an improvement of less than 1.5\% in accuracy,
 and we saw no detectable difference using Cluster-Matching.
 
 
-\section{Conclusions}\label{conclusions}
-We worked hard, and achieved very little.
-
 \section{Future Research}
 We see a variety of promising avenues for the future development of Cluster-Matching. More work needs to be done to assess the scalability of our method, although the outlook is promising. Current literature on accelerometer-based gesture recognition usually reports classification results for 4 to 8 gesture types. We believe that our method has the potential to scale to more gesture types given our current results. Our technique currently incorporates centroid-distance and HMM log-likelihood scores heuristically by simply multiplying them before classifying. It is likely that a more principled method of combining centroid-distance and HMM loglikelihood - one possibly incorporating the data itself - will yield better results. This becomes especially important for gestures in which one component of the classifier performs significantly better than the other. Lastly, future work should address the possibility of using Cluster-Matching for automated segmentation of continuous accelerometer and gyroscope data. Current proposals use only heuristic methods and do not incorporate the trained gesture classifier, e.g. Prekopcsak (2008) demonstrates the feasibility of using a speed threshold to detect the onset of a gesture. HMMs do not provide an obvious means by which to use them for segmentation, as they will readily assign log-likelihoods to sequences of any length. We suspect that Cluster-Matching can be computed over a sliding window on the data stream, providing a means by which to determine when a sequence of samples is being fit well by a subset of the clusters of one of the gesture cluster-sets.
+
+\section{Conclusions}\label{conclusions}
+We thus show non trivial gains in accuracy with resect to our baseline classifier KHMM.  These gains are accrued not only through the collection of a new set of features using gyroscope data, but also through our novel algorithms Cluster-Matching-HMM and Cluster-Matching.  Interestingly enough it appears that even though we are classifying sequential data, simply assigning cluster fitness scores to all the vectors in a gesture example, regardless of sequential order, returns the most accurate classifiers.  In fact, the only times when this is not the case is when we synthetically manipulate the data files to purposely break our Cluster-Matching classifier.  However, we could not mimic these this ``break case" using actually gesture data.  We are thus confident in the ability of Cluster-Matching to accurately classify real human gestures.  Regardless, we hope to have pushed forward the study and field of gesture recognition; not only by presenting classifiers with high accuracy, but also through the presentation of a new cluster based paradigm of classifiers.  
+
 
 \bibliographystyle{abbrv}
 \bibliography{main}
