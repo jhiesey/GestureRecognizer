@@ -24,9 +24,10 @@ end
 
 pn = [];
 for i = 1:size(points,1)
-    pn(i) = norm(points(i), 2);
+    pn(i) = norm(points(i,:), 2);
 end
-points = points / mean(pn);
+%points = points / mean(pn);
+%disp(['norm factor: ' num2str(mean(pn))]);
 
 
 %keyboard;
