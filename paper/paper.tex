@@ -5,8 +5,8 @@
 }
 \date{\today}
 
-\documentclass[11pt]{article}
-\usepackage[margin=0.75in]{geometry}
+\documentclass[12pt]{article}
+\usepackage[margin=1.0in]{geometry}
 \usepackage{amsfonts}
 
 \begin{document}
@@ -21,7 +21,7 @@ We alter KHMM's clustering assumptions.  Specifically, we address the implicit a
 There are a variety of reasons why we use gyroscope information. Firstly, gyroscope data is additional information that is useful for identifying gestures, especially considering that slight variations in the device's orientation from gesture to gesture will affect accelerometer readings. These variations, however, can be corrected for with judicious use of gyroscope data. We hypothesize that a machine learning algorithm will be capable of utilizing the data to effectively make these corrections, thereby resulting in better orientation invariance.  Secondly, if we wish to use 3d gestures as an input modality for mobile devices, inclusion of gyroscope information offers opportunities for greater expressiveness. Gestures can now include and be differentiated by orientation changes.
 
 On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
-% \pagebreak
+\pagebreak
 
 \section{Data}
 As with any learning algorithm we require to have some data available.  We use Apple's iPhone and xSensor application to record, train and test our various algorithms.  For each training example for any gesture type xSensor returns to us an ordered series of vectors in $\mathbb{R}^n$ containing instantaneous acceleration and gyroscope data sampled at 32 hz.  For the most part we normalize each training example by scaling each vector in the training example by $\frac{n}{\sum_n{\parallel x_n \parallel}}$, where the training example consists of $n$ instantaneous feature vectors.  
@@ -153,11 +153,10 @@ KHMM algorithm we saw an improvement of less than 1.5\% in accuracy,
 and we saw no detectable difference using Cluster-Matching.
 
 
-\section{Conclusions}\label{conclusions}
-We worked hard, and achieved very little.
-
 \section{Future Research}
 Try our new algorithm with single clustering
+\section{Conclusions}\label{conclusions}
+We thus show non trivial gains in accuracy with resect to our baseline classifier KHMM.  These gains are accrued not only through the collection of a new set of features using gyroscope data, but also through our novel algorithms Cluster-Matching-HMM and Cluster-Matching.  Interestingly enough it appears that even though we are classifying sequential data, simply assigning cluster fitness scores to all the vectors in a gesture example, regardless of sequential order, returns the most accurate classifiers.  In fact, the only times when this is not the case is when we synthetically manipulate the data files to purposely break our Cluster-Matching classifier.  However, we could not mimic these this ``break case" using actually gesture data.  We are thus confident in the ability of Cluster-Matching to accurately classify real human gestures.  Regardless, we hope to have pushed forward the study and field of gesture recognition; not only by presenting classifiers with high accuracy, but also through the presentation of a new cluster based paradigm of classifiers.  
 
 \bibliographystyle{abbrv}
 \bibliography{main}
