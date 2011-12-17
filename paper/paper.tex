@@ -27,7 +27,7 @@ On a pragmatic note, we develop and test on the iPhone platform, although our so
 \pagebreak
 
 \section{Algorithms}
-We now discuss the three main algorithms that we examine and analyze, starting first with Klingmann's baseline KHMM, followed by our MultiClustHMM and MultiClust alterations.  
+We now discuss the three main algorithms that we examine and analyze, starting first with Klingmann's baseline KHMM, followed by our Cluster-Matching-HMM and Cluster-Matching alterations.  
 
 \subsection{KHMM}
 
@@ -41,9 +41,40 @@ Formally we describe the algorithm as follows:
 		For all training example across all gesture types, kmeans defines a clustering function $f: \mathbb{R}^n \rightarrow \mathbb{Z}$. 
 	\subsubsection{Hidden Markov Model}
 		For each set of training examples for each gesture type train a Hidden Markov Model.  Namely in this stage, for each gesture type $g$, we generate a function $h_g: (\mathbb{Z}^k) \rightarrow \mathbb{R}_{[0,1]}$  by the Hidden Markov Model process:
-$HMM: (\mathbb{Z}^k)^t \rightarrow h_g$, where each training example consists of k instantaneous data points and there are t training examples for gesture type g.  
+$HMM: (\mathbb{Z}^k)^t \rightarrow h_g$, where each training example consists of $k$ instantaneous data points and there are $t$ training examples for gesture type g.  
 	\subsubsection{Classification Procedure}
-		To classify an unknown gesture example, which exists in $(\mathbb{R}^n)^k$, we first transform it to it’s dicsretized version, namely $f(\mathbb{R}^n)^k$ and then for each gesture type $g$, apply $h_g((f(\mathbb{R}^n))^k)$ and classify the example according to the $g’$ were $h_g’$ returns maximum value. 
+		To classify an unknown gesture example, which exists in $(\mathbb{R}^n)^k$, we first transform it to its discretized version, namely $f(\mathbb{R}^n)^k$ and then for each gesture type $g$, apply $h_g((f(\mathbb{R}^n))^k)$ and classify the example according to the $g’$ were $h_g’$ returns maximum value. 
+		
+		
+\subsection{Cluster-Matching-HMM}
+
+The motivation for Cluster-Matching-HMM derives from the realization that in the clustering step KHMM applies the same centroids to each training example regardless of what gesture type it belongs too.  We hypothesize that different gesture types have vastly different vector features score (ie lie in different subspaces of $\mathbb{R}^n$) and thus we might gain information by clustering each gesture type independently and then training an HMM for each clustered training type.  In the classification step we then classify over each clustering and each corresponding HMM.  Moreover we weight the resulting HMM probabilities according to how well the training example ``fits" in the the assigned cluster.  
+\\
+\\
+Formally we describe the algorithm as follows:
+
+	\subsubsection{Clustering}
+		For each gesture type $g$ across all training examples, kmeans defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z}$.
+	\subsubsection{Hidden Markov Model}
+		For each set of training examples for each gesture type train a Hidden Markov Model.  Namely in this set we generate a function $h_g: (\mathbb{Z}^k) \rightarrow \mathbb{R}_{[0,1]}$ by the Hidden Markov Model process: 
+		$HMM: (\mathbb{Z}^k)^t \rightarrow h_g$, where each training example consists of $k$ instantaneous data points and there are $t$ training examples for gesture type $g$.  
+
+	\subsubsection{Classification Procedure}
+	To classify a new example, which exists in $(\mathbb{R}^n)^k$, we first transform, for each gesture type $g$, the training example to it’s discretized version, namely $f_g(\mathbb{R}^n)^k$ and then apply $h_g((f_g(\mathbb{R}^n))^k)$.  Finally, we classify the example according to the $g'$ where $h_{g^{'}} * p((f_{g^{'}})^k)$ returns the maximum value.  Here $p$ is a ``fittness value" of how well the training example fit into the given clustering.  Namely we used an aggregate sum of the distances of the training vectors to their respective assigned centroids.  Thus not only does each gesture type receive its own HMM but also its own clustering.  
+	
+
+	\subsection{Cluster-Matching}
+
+Motivated by the effectiveness\footnote{See results.} of Cluster-Matching-HMM we define Cluster-Matching to naively cluster the training examples for specific gesture types.  Then, when classifying, we assign an unknown gesture type to the gesture clustering to which it best fits.  
+\\
+\\
+Formally we describe the algorithm as follows:
+
+		\subsubsection{Clustering}
+		For each gesture type $g$ across all training examples, kmeans defines a clustering function $f_g: \mathbb{R}^n \rightarrow \mathbb{Z}$.
+
+		 \subsubsection{Classification Procedure}
+ 		For all $g$, compute $p((f_g(\mathbb{R}^n))^k)$.  Return $g$ that returns minimum value.  
 
 
 \section{Results}\label{results}
