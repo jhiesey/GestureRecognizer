@@ -5,8 +5,8 @@
 }
 \date{\today}
 
-\documentclass[12pt]{article}
-\usepackage[margin=1.0in]{geometry}
+\documentclass[11pt]{article}
+\usepackage[margin=0.75in]{geometry}
 \usepackage{amsfonts}
 
 \begin{document}
@@ -24,7 +24,7 @@ We alter KHMM's clustering assumptions.  Specifically, we address the implicit a
 There are a variety of reasons why we use gyroscope information. Firstly, gyroscope data is additional information that is useful for identifying gestures, especially considering that slight variations in the device's orientation from gesture to gesture will affect accelerometer readings. These variations, however, can be corrected for with judicious use of gyroscope data. We hypothesize that a machine learning algorithm will be capable of utilizing the data to effectively make these corrections, thereby resulting in better orientation invariance.  Secondly, if we wish to use 3d gestures as an input modality for mobile devices, inclusion of gyroscope information offers opportunities for greater expressiveness. Gestures can now include and be differentiated by orientation changes.
 
 On a pragmatic note, we develop and test on the iPhone platform, although our solutions have general applicability, and an available Matlab implementation. The iPhone is chosen amongst our team as two of our members have previous iPhone development experience.  
-\pagebreak
+% \pagebreak
 
 \section{Algorithms}
 We now discuss the three main algorithms that we examine and analyze, starting first with Klingmann's baseline KHMM, followed by our Cluster-Matching-HMM and Cluster-Matching alterations.  
