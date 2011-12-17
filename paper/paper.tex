@@ -2,12 +2,20 @@
 \author{
         John Hiesey \\
         jhiesey@cs.stanford.edu
+        \and
+        Clayton Mellina \\
+        cmellina@cs.stanford.edu
+        \and
+        Zavain Dar \\
+        zdar@cs.stanford.edu
 }
 \date{\today}
 
 \documentclass[11pt]{article}
 \usepackage[margin=0.75in]{geometry}
 \usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{indentfirst}
 
 \begin{document}
 \maketitle
@@ -95,7 +103,7 @@ Formally we describe the algorithm as follows:
   Yes	&	Both	&	All &	Cluster-Matching (20) &  97.9\% \\ \hline
   Yes	&	Both  &	All &	Cluster-Matching (40) & 	98.4\% \\ \hline
   No	&	Both	&	All &	Cluster-Matching (40) & 	98.4\% \\ \hline
-  Yes	&	Both	& Squares &	Cluster-Matching (10) & 	100\% \\ \hline
+  Yes	&	Both	& Squares and Triangles &	Cluster-Matching (10) & 	100\% \\ \hline
   Yes	&	Both	& Circles and Reversed-circles  &	Cluster-Matching (10) & 	Chance \\ \hline
   Yes	&	Both	& Circles and Reversed-circles  &	Cluster-Matching-HMM (10) &	72.0\% \\ \hline
   Yes	&	Both  & Circles and Reversed-circles  &	Cluster-Matching-HMM (20) & 88.8\% \\
@@ -139,11 +147,18 @@ any non contrived data.
 Increasing the number of symbols in the HMM's alphabet improves accuracy
 up to a point, but at the cost of a decrease in performance.
 
+\begin{figure}
+\center
+\includegraphics[scale=0.5]{accuracy_vs_num_clusters.png}
+\caption{Classification accuracy of Cluster-Matching-HMM for 6 gestures}
+\label{fig:alphabetsize}
+\end{figure}
+
 % For example, on the five KHMM gestures, increasing the alphabet size
 % from 10 to 40 improves the accuracy from 96.7\% to 98.4\%.  On the contrived
 % circle data, the improvement was much larger, from 72.0\% to 88.8\%.
 
-As shown in figure~\ref{fig:alphabetsize}, the optimum accuracy is achieved
+As shown in Figure~\ref{fig:alphabetsize}, the optimum accuracy is achieved
 at an alphabet size of around 25 symbols, with gradually decreasing accuracy
 outside of that range.
 
@@ -157,7 +172,7 @@ and we saw no detectable difference using Cluster-Matching.
 We worked hard, and achieved very little.
 
 \section{Future Research}
-Try our new algorithm with single clustering
+We see a variety of promising avenues for the future development of Cluster-Matching. More work needs to be done to assess the scalability of our method, although the outlook is promising. Current literature on accelerometer-based gesture recognition usually reports classification results for 4 to 8 gesture types. We believe that our method has the potential to scale to more gesture types given our current results. Our technique currently incorporates centroid-distance and HMM log-likelihood scores heuristically by simply multiplying them before classifying. It is likely that a more principled method of combining centroid-distance and HMM loglikelihood - one possibly incorporating the data itself - will yield better results. This becomes especially important for gestures in which one component of the classifier performs significantly better than the other. Lastly, future work should address the possibility of using Cluster-Matching for automated segmentation of continuous accelerometer and gyroscope data. Current proposals use only heuristic methods and do not incorporate the trained gesture classifier, e.g. Prekopcsak (2008) demonstrates the feasibility of using a speed threshold to detect the onset of a gesture. HMMs do not provide an obvious means by which to use them for segmentation, as they will readily assign log-likelihoods to sequences of any length. We suspect that Cluster-Matching can be computed over a sliding window on the data stream, providing a means by which to determine when a sequence of samples is being fit well by a subset of the clusters of one of the gesture cluster-sets.
 
 \bibliographystyle{abbrv}
 \bibliography{main}
