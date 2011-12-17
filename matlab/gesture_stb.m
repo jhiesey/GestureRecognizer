@@ -3,7 +3,7 @@ num_clusters =  28;     % number of clusters in our emission alphabet
 num_states = 8;         % number of states in hmm
 hmm_width = 3;          % numbef of next states to distribute the initial transition probability over
 
-[data, total_samples] = readTrainingExamplesAll({'triangles', 'circles'});
+[data, total_samples] = readTrainingExamplesAll({'triangles', 'circles', 'bowling','upflips','rightflips'});
 % training and testing are each cell arrays containing a cell array for
 % each gesture. Each of these gesture cell arrays contains a matrix of
 % accel data.
@@ -27,6 +27,7 @@ hmm_width = 3;          % numbef of next states to distribute the initial transi
 %     data{1}(ind1) = data{2}(ind2);
 %     data{2}(ind2) = temp;
 % end
+
 
 num_folds = 10;
 kfold_ind = cell(1,numel(data));
@@ -115,6 +116,7 @@ for fold = 1:num_folds
         for k = 1:numel(testing{g})
             % discretize
             seq = dsearchn(clust, T, testing{g}{k})';
+            %seq = seq(randperm(numel(seq)));
             
             % try all HMMs
             loglik = zeros(1, num_gestures);
